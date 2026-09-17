@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Tom Brady Quotes</title>
+</head>
+<body>
+
+    <h1>Tom Brady Quotes</h1>
+
+    <nav>
+        <a href="{% url 'home' %}">Home</a> |
+        <a href="{% url 'quote' %}">Quote</a> |
+        <a href="{% url 'show_all' %}">Show All</a> |
+        <a href="{% url 'about' %}">About</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
