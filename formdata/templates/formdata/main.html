@@ -1,0 +1,21 @@
+<!-- formdata/templates/formdata/main.html -->
+{% load static %}
+<html>
+    <head>
+        <title>Durr Burger</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+    {% block content %}
+    <h1>Durr Burger</h1>
+    <h3>Durr Burger - the best burgers on Comm Ave!!</h3>
+    <img src="{% static image %}" alt="Durr Burger" width="500">
+    <p></p>
+    {% endblock %}
+    
+    <!-- <hr>
+    The current time is {{current_time}}. -->
+ 
+ 
+    </body>
+</html>

@@ -4,7 +4,8 @@ from . import views
  
  
 urlpatterns = [ 
-    path(r'', views.show_form, name="show_form"), #new
+    path(r'', views.main, name="main"), #new
+
 ]
  
  
