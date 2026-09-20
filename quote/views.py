@@ -21,7 +21,7 @@ images = [
     "images/brady4.jpg",
 ]
 
-
+#Gets random quote and imagefrom quotes list
 def quote(request):
     '''
     Show one randomly selected quote and image.
@@ -33,7 +33,7 @@ def quote(request):
     }
     return render(request, 'quote/quote.html', context)
 
-
+#Gets all quotes and images
 def show_all(request):
     '''
     Show all quotes and all images.
@@ -45,10 +45,9 @@ def show_all(request):
     }
     return render(request, 'quote/show_all.html', context)
 
-
 def about(request):
     '''
-    Show biographical information about Tom Brady and the creator of this app.
+    Show biographical information about Tom Brady and the app.
     '''
 
     return render(request, 'quote/about.html')
