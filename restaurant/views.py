@@ -1,5 +1,10 @@
+# views.py defines the view functions for main, order, and submit
+# Main funtion renders homepage and resturaunt image
+# Order function renders order form and generates random daily special
+# Submit function handles HTTP post request to server and generates conformation page from submission
 from django.shortcuts import render, redirect
 import random
+import time
 
 
 # Create your views here.
@@ -62,6 +67,11 @@ def submit(request):
         for item in entrees + side + drink:
             total_price += prices.get(item, 0)
         total_price = round(total_price, 2)
+
+        # ready in a random amount of time between 30 and 60 minutes from now
+        minutes_from_now = random.randint(30, 60)
+        ready_time = time.strftime('%I:%M %p', time.localtime(time.time() + minutes_from_now * 60))
+
         context = {
             'name': name,
             'email': email,
@@ -71,6 +81,7 @@ def submit(request):
             'drink': drink,
             'instructions': instructions,
             'total': total_price,
+            'ready_time': ready_time,
         }
 
         return render(request, template_name, context=context)

@@ -1,4 +1,7 @@
-<!-- restaurant/templates/restaurant/confirmation.html -->
+<!-- restaurant/templates/restaurant/confirmation.html
+ conformation.html redners the conformation page after the order form is submitted.
+ The conformation page includes the items ordered, the total price, the user's personal details (if enterd) 
+ and the estimated time which the order will be completed/ready for pickup -->
 {% extends 'restaurant/base.html' %}
 {% load static %}
 {% block content %}
@@ -17,7 +20,7 @@
 <p><strong>Special instructions:</strong> {{ instructions }}</p>
 {% endif %}
 
-
+<p>Your order will be ready at: {{ ready_time }}</p>
 <h3>Contact details</h3>
 <p>Email: {{ email }}</p>
 <p>Phone: {{ phone }}</p>
