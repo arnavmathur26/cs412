@@ -8,22 +8,22 @@
      
     <form method="post" action="{% url 'submit' %}">
         {% csrf_token %}
-        <legend>Entrees</legend>
+        <legend>Entrees:</legend>
         <label><input type="checkbox" name="entrees" value="Durr Burger"> Durr Burger ($8.00)</label><br>
         <label><input type="checkbox" name="entrees" value="Cheeseburger"> Cheeseburger ($9.00)</label><br>
         <label><input type="checkbox" name="entrees" value="Veggie Burger"> Veggie Burger ($8.50)</label><br>
-        <label><input type="checkbox" name="entrees" value="Chicken Sandwich"> Chicken Sandwich ($9.50)</label><br>
+        <label><input type="checkbox" name="entrees" value="Chicken Sandwich"> Chicken Sandwich ($8.50)</label><br>
+        <label><input type="checkbox" name="entrees" value="Special"> <b>Today's Special: </b> {{special}} ($12.00)</label>
 
 
-
-        <legend>Side</legend>
+        <legend>Side:</legend>
         <label><input type="checkbox" name="side" value="Fries" checked> Fries ($5.00)</label><br>
         <label><input type="checkbox" name="side" value="Onion Rings"> Onion Rings ($6.00)</label><br>
         <label><input type="checkbox" name="side" value="No Side"> No Side</label><br>
 
 
 
-        <legend>Drinks</legend>
+        <legend>Drinks:</legend>
         <label><input type="checkbox" name="drink" value="Water"> Water ($2.00)</label><br>
         <label><input type="checkbox" name="drink" value="Soda"> Soda ($3.00)</label><br>
         <label><input type="checkbox" name="drink" value="Lemonade"> Lemonade ($2.50)</label><br>

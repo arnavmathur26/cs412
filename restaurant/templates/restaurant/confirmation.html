@@ -3,14 +3,20 @@
 {% load static %}
 {% block content %}
 <h2>Order Confirmation</h2>
+{% if name %}
 <h3>Thank you, {{ name }}! Your order has been placed.</h3>
+{% else %}
+<h3>Thank you! Your order has been placed.</h3>
+{% endif %}
 
+<p>Your total is: ${{ total|floatformat:2 }}</p>
 <p><strong>Entrees:</strong> {{ entrees|join:", " }}</p>
 <p><strong>Side:</strong> {{ side|join:", " }}</p>
 <p><strong>Drink:</strong> {{ drink|join:", " }}</p>
 {% if instructions %}
 <p><strong>Special instructions:</strong> {{ instructions }}</p>
 {% endif %}
+
 
 <h3>Contact details</h3>
 <p>Email: {{ email }}</p>
