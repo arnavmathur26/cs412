@@ -1,0 +1,37 @@
+<!-- restaurant/templates/restaurant/confirmation.html
+ conformation.html redners the conformation page after the order form is submitted.
+ The conformation page includes the items ordered, the total price, the user's personal details (if enterd) 
+ and the estimated time which the order will be completed/ready for pickup -->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% block content %}
+<h2>Order Confirmation</h2>
+{% if name %}
+<h3>Thank you, {{ name }}! Your order has been placed.</h3>
+{% else %}
+<h3>Thank you! Your order has been placed.</h3>
+{% endif %}
+<div class="confirmation-box">
+    <p>Your total is: <b>${{ total|floatformat:2 }}</b></p>
+    <p><strong>Entrees:</strong> {{ entrees|join:", " }}</p>
+    <p><strong>Side:</strong> {{ side|join:", " }}</p>
+    <p><strong>Drink:</strong> {{ drink|join:", " }}</p>
+    {% if instructions %}
+    <p><strong>Special instructions:</strong> {{ instructions }}</p>
+    {% endif %}
+
+    <p>Your order will be ready at: {{ ready_time }}</p>
+    <h3>Contact details</h3>
+    {% if email %}
+    <p>Email: {{ email }}</p>
+    {% else %}
+    <p>Email: None provided</p>
+    {% endif %}
+
+    {% if phone %}
+    <p>Phone: {{ phone }}</p>
+    {% else %}
+    <p>Phone: None provided</p>
+    {% endif %}
+</div>
+{% endblock %}

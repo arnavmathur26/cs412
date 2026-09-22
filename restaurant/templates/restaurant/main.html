@@ -1,0 +1,47 @@
+<!-- restaurant/templates/restaurant/main.html 
+ main.html redners the main resturaunt page, which includes the resturaunts name, picture, location, and hours of operation-->
+{% extends 'restaurant/base.html' %}
+{% block content %}
+    <h2>Durr Burger - the best burgers in Boston!!</h2>
+
+    {% load static %}
+    <img src="{% static image %}" alt="Durr Burger" width="500">
+    <h4>Come find us at 267 Newbury St, Boston, MA 02116</h4><br>
+    <h2>Hours of Operation</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th>Day</th>
+            <th>Hours</th>
+        </tr>
+        <tr>
+            <td>Monday</td>
+            <td>11:00 AM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>11:00 AM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>11:00 AM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>11:00 AM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>11:00 AM - 10:00 PM</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>11:00 AM - 10:00 PM</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td>12:00 PM - 8:00 PM</td>
+        </tr>
+    </table>
+    <p></p>
+{% endblock %}
+

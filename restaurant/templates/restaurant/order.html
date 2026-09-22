@@ -1,0 +1,47 @@
+<!-- restaurant/templates/restaurant/order.html
+ order.html is a HTML template which renders and saves the inputs of the order form for the resturaunt. 
+ User inputs a choice of entrees, sides, and drinks, and their personal details if they so choose. -->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+    {% block content %}
+    <h2>Durr Burger Order Page</h2>
+
+    <form method="post" action="{% url 'submit' %}">
+        {% csrf_token %}
+        <legend>Entrees:</legend>
+        <label><input type="checkbox" name="entrees" value="Durr Burger"> Durr Burger ($8.00)</label><br>
+        <label><input type="checkbox" name="entrees" value="Cheeseburger"> Cheeseburger ($9.00)</label><br>
+        <label><input type="checkbox" name="entrees" value="Veggie Burger"> Veggie Burger ($8.50)</label><br>
+        <label><input type="checkbox" name="entrees" value="Chicken Sandwich"> Chicken Sandwich ($8.50)</label><br>
+        <label><input type="checkbox" name="entrees" value="{{ special }}"> <b>Today's Special: </b> {{special}} ($12.00)</label>
+
+
+        <legend>Side:</legend>
+        <label><input type="checkbox" name="side" value="Fries" checked> Fries ($5.00)</label><br>
+        <label><input type="checkbox" name="side" value="Onion Rings"> Onion Rings ($6.00)</label><br>
+        <label><input type="checkbox" name="side" value="No Side"> No Side</label><br>
+
+
+
+        <legend>Drinks:</legend>
+        <label><input type="checkbox" name="drink" value="Water"> Water ($2.00)</label><br>
+        <label><input type="checkbox" name="drink" value="Soda"> Soda ($3.00)</label><br>
+        <label><input type="checkbox" name="drink" value="Lemonade"> Lemonade ($2.50)</label><br>
+
+
+        <p>
+            <label for="instructions">Special instructions:</label><br>
+            <textarea id="instructions" name="instructions" rows="3" cols="40"></textarea>
+        </p>
+        <p>Please enter your personal details below</p>
+        Name: <input type="text" name="name"><br>
+        Email: <input type="text" name="email"><br>
+        Phone number: <input type="text" name="phone">
+
+        <p>
+            <input type="submit" value="Place Order">
+        </p>
+    </form>
+    {% endblock %}
+
+  
