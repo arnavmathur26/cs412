@@ -11,17 +11,18 @@
 {% else %}
 <h3>Thank you! Your order has been placed.</h3>
 {% endif %}
+<div class="confirmation-box">
+    <p>Your total is: ${{ total|floatformat:2 }}</p>
+    <p><strong>Entrees:</strong> {{ entrees|join:", " }}</p>
+    <p><strong>Side:</strong> {{ side|join:", " }}</p>
+    <p><strong>Drink:</strong> {{ drink|join:", " }}</p>
+    {% if instructions %}
+    <p><strong>Special instructions:</strong> {{ instructions }}</p>
+    {% endif %}
 
-<p>Your total is: ${{ total|floatformat:2 }}</p>
-<p><strong>Entrees:</strong> {{ entrees|join:", " }}</p>
-<p><strong>Side:</strong> {{ side|join:", " }}</p>
-<p><strong>Drink:</strong> {{ drink|join:", " }}</p>
-{% if instructions %}
-<p><strong>Special instructions:</strong> {{ instructions }}</p>
-{% endif %}
-
-<p>Your order will be ready at: {{ ready_time }}</p>
-<h3>Contact details</h3>
-<p>Email: {{ email }}</p>
-<p>Phone: {{ phone }}</p>
+    <p>Your order will be ready at: {{ ready_time }}</p>
+    <h3>Contact details</h3>
+    <p>Email: {{ email }}</p>
+    <p>Phone: {{ phone }}</p>
+</div>
 {% endblock %}

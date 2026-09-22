@@ -1,0 +1,146 @@
+/* static/styles.css
+ Color scheme and layout for the Durr Burger restaurant app: light blue and orange */
+
+body {
+    background-color: #F0F9FF;
+    color: #1B2A33;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-family: 'Baloo 2', cursive;
+}
+
+.page {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px 24px 60px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3em;
+    letter-spacing: 1px;
+    color: #2C8DC7;
+    text-shadow: 2px 2px 0 #F5872B;
+}
+
+h2, h3 {
+    color: #2C8DC7;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+}
+
+nav {
+    background-color: #2C8DC7;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #F5872B;
+}
+
+a {
+    color: #F5872B;
+}
+
+img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
+table {
+    border-color: #2C8DC7;
+    border-collapse: collapse;
+    margin: 16px auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #F5872B;
+    color: #FFFFFF;
+}
+
+td {
+    background-color: #FFFFFF;
+}
+
+form {
+    text-align: left;
+    max-width: 650px;
+    margin: 16px auto;
+    background-color: #FFFFFF;
+    padding: 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.15em;
+    line-height: 2;
+}
+
+form legend {
+    color: #2C8DC7;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+form label {
+    display: inline-block;
+    padding: 4px 0;
+}
+
+form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+form input[type="text"],
+form textarea {
+    font-size: 1em;
+    padding: 8px 10px;
+    margin: 6px 0 12px;
+    border: 1px solid #2C8DC7;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #F5872B;
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #d6721f;
+}
+
+.confirmation-box {
+    text-align: left;
+    max-width: 650px;
+    margin: 16px auto;
+    background-color: #FFFFFF;
+    padding: 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.15em;
+    line-height: 1.8;
+}

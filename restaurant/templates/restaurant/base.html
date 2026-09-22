@@ -5,16 +5,20 @@
 <html>
     <head>
         <title>Durr Burger</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&family=Luckiest+Guy&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'styles.css' %}">
     </head>
     <body>
-    <h1>Durr Burger</h1>
-    <nav>
-        <a href="{% url 'main' %}">Main Page</a> |
-        <a href="{% url 'order' %}">Order Page</a> |
-    </nav>
-    {% block content %}
-    {% endblock %}
-
+    <div class="page">
+        <h1>Durr Burger</h1>
+        <nav>
+            <a href="{% url 'main' %}">Main Page</a> |
+            <a href="{% url 'order' %}">Order Page</a> |
+        </nav>
+        {% block content %}
+        {% endblock %}
+    </div>
     </body>
 </html>

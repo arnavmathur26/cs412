@@ -1,11 +1,11 @@
-<!-- restaurant/templates/restaurant/order.html -->
+<!-- restaurant/templates/restaurant/order.html
+ order.html is a HTML template which renders and saves the inputs of the order form for the resturaunt. 
+ User inputs a choice of entrees, sides, and drinks, and their personal details if they so choose. -->
 {% extends 'restaurant/base.html' %}
 {% load static %}
     {% block content %}
     <h2>Durr Burger Order Page</h2>
-    <h3>Place an order:</h3>
-    <p>Select your entrees</p>
-     
+
     <form method="post" action="{% url 'submit' %}">
         {% csrf_token %}
         <legend>Entrees:</legend>

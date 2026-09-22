@@ -2,13 +2,12 @@
  main.html redners the main resturaunt page, which includes the resturaunts name, picture, location, and hours of operation-->
 {% extends 'restaurant/base.html' %}
 {% block content %}
-    <h1>Durr Burger</h1>
-    <h3>Durr Burger - the best burgers in Boston!!</h3>
+    <h2>Durr Burger - the best burgers in Boston!!</h2>
 
     {% load static %}
     <img src="{% static image %}" alt="Durr Burger" width="500">
-    <p>Come find us at 267 Newbury St, Boston, MA 02116</p><br>
-    <h3>Hours of Operation</h3>
+    <h4>Come find us at 267 Newbury St, Boston, MA 02116</h4><br>
+    <h2>Hours of Operation</h2>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Day</th>
