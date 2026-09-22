@@ -1,12 +1,16 @@
 <!-- formdata/templates/formdata/base.html -->
-{% load static %}
+ {% load static %}
 <html>
     <head>
         <title>Durr Burger</title>
         <link rel="stylesheet" href="{% static 'styles.css' %}">
     </head>
     <body>
-        
+    <h1>Durr Burger</h1>
+    <nav>
+        <a href="{% url 'main' %}">Main Page</a> |
+        <a href="{% url 'order' %}">Order Page</a> |
+    </nav>
     {% block content %}
     {% endblock %}
     
