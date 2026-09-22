@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'quote', #Assignment 1
-    'formdata', #Assignment 2
+    'restaurant', #Assignment 2
 ]
 
 MIDDLEWARE = [
