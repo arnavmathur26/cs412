@@ -12,7 +12,7 @@
 <h3>Thank you! Your order has been placed.</h3>
 {% endif %}
 <div class="confirmation-box">
-    <p>Your total is: ${{ total|floatformat:2 }}</p>
+    <p>Your total is: <b>${{ total|floatformat:2 }}</b></p>
     <p><strong>Entrees:</strong> {{ entrees|join:", " }}</p>
     <p><strong>Side:</strong> {{ side|join:", " }}</p>
     <p><strong>Drink:</strong> {{ drink|join:", " }}</p>
@@ -22,7 +22,16 @@
 
     <p>Your order will be ready at: {{ ready_time }}</p>
     <h3>Contact details</h3>
+    {% if email %}
     <p>Email: {{ email }}</p>
+    {% else %}
+    <p>Email: None provided</p>
+    {% endif %}
+
+    {% if phone %}
     <p>Phone: {{ phone }}</p>
+    {% else %}
+    <p>Phone: None provided</p>
+    {% endif %}
 </div>
 {% endblock %}

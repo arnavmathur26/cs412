@@ -53,7 +53,6 @@ def submit(request):
     '''Process the form submission, and generate a result.'''
 
     template_name = "restaurant/confirmation.html"
-    # read the form data into python variables:
     if request.POST:
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -65,7 +64,10 @@ def submit(request):
 
         total_price = 0.00
         for item in entrees + side + drink:
-            total_price += prices.get(item, 0)
+            if item in specials:
+                total_price += prices["Special"]
+            else:
+                total_price += prices.get(item, 0)
         total_price = round(total_price, 2)
 
         # ready in a random amount of time between 30 and 60 minutes from now
