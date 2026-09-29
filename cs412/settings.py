@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-y_@qs&=u_@+jo6+z7+106=#l$d16!#j3rfc-)9_a(3n&hl37ni
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cs-webapps.bu.edu',]
+#ALLOWED_HOSTS = ['cs-webapps.bu.edu',]
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'quote', #Assignment 1
     'restaurant', #Assignment 2
+    'instagram', #Assignment 3
 ]
 
 MIDDLEWARE = [

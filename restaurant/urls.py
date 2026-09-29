@@ -1,5 +1,5 @@
-#urls.py defines the url routing for the resturaunt app
-#It maps the three paths, main (r''), order, and submit to view functions
+# urls.py defines the url routing for the resturaunt app
+# It maps the three paths, main (r''), order, and submit to view functions
 
 from django.urls import path
 from django.conf import settings
