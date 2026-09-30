@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% comment %} instagram/templates/instagram/show_all_profiles.html
+ show_all_profiles.html extends base.html and displays every Profile in a grid,
+ showing each profile's image, username and display name. {% endcomment %}
+
+{% block content %}
+<h2>All Profiles</h2>
+
+<div class="profile-grid">
+    {% for profile in profiles %}
+    <div class="profile-card">
+        <img src="{{ profile.profile_image_url }}" alt="{{ profile.username }}'s profile picture">
+        <h3>@{{ profile.username }}</h3>
+        <p>{{ profile.display_name }}</p>
+    </div>
+    {% empty %}
+    <p>No profiles yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}
