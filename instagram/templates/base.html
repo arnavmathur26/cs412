@@ -1,7 +1,7 @@
-{% comment %} instagram/templates/base.html
+ <!--instagram/templates/base.html
  base.html is the base template for the instagram app. It sets up the standard HTML
  structure, links the CSS, renders the header/navigation and footer shown on every page,
- and defines a content block for child templates to fill in. {% endcomment %}
+ and defines a content block for child templates to fill in.-->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +26,7 @@
 
         <footer>
             <p>Mini Insta &mdash; CS412 by Arnav Mathur</p>
+            <p><a href="{% url 'show_all_profiles' %}">All Profiles</a></p>
         </footer>
     </body>
 </html>

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% comment %} instagram/templates/instagram/show_profile.html
+ show_profile.html extends base.html and displays a single Profile, showing a
+ large profile image and all of the profile's data attributes. Follower/following
+ counts and posts are placeholders for now. {% endcomment %}
+
+{% block content %}
+<div class="profile-detail">
+    <img src="{% static profile.profile_image_url %}" alt="{{ profile.username }}'s profile picture">
+
+    <div class="profile-info">
+        <h2>@{{ profile.username }}</h2>
+
+        <table class="profile-stats">
+            <tr>
+                <td><strong>&ndash;</strong> posts</td>
+                <td><strong>1,250</strong> followers</td>
+                <td><strong>348</strong> following</td>
+            </tr>
+        </table>
+
+        <table class="profile-table">
+            <tr>
+                <th>Display name</th>
+                <td>{{ profile.display_name }}</td>
+            </tr>
+            <tr>
+                <th>Bio</th>
+                <td>{{ profile.bio_text }}</td>
+            </tr>
+            <tr>
+                <th>Joined</th>
+                <td>{{ profile.join_date|date:"F j, Y" }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<section class="profile-posts">
+    <h3>Posts</h3>
+    <p>Posts will appear here.</p>
+</section>
+{% endblock %}
