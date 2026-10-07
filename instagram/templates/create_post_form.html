@@ -1,0 +1,19 @@
+<!-- instagram/create_post_form.html
+    display the HTML form to create a new Profile object.
+-->
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Create a new Profile</h1>
+
+
+<!-- display the HTML form -->
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Create Post</button>
+</form>
+
+
+{% endblock %}
