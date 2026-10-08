@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 <!-- instagram/templates/show_post.html
  show_post.html extends base.html and displays a single Post, showing its
  caption, timestamp, and all associated Photos in a grid. -->
@@ -13,7 +12,7 @@
 
     <div class="post-photo-grid">
         {% for photo in post.get_photos %}
-            <img src="{% static photo.image_url %}" alt="" style="width: 450px; height: 450px; object-fit: cover;">
+            <img src="{{ photo.get_image_url }}" alt="" style="width: 450px; height: 450px; object-fit: cover;">
         {% empty %}
             <p>No photos for this post.</p>
         {% endfor %}

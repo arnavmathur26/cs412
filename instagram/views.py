@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Profile, Posts
+from .models import Profile, Posts, Photo
 from .forms import CreatePostForm
 
 # Create your views here.
@@ -28,8 +28,32 @@ class ProfileDetailView(DetailView):
    context_object_name = "profile"
 
 class CreatePostView(CreateView):
+   '''Handle creating a new Post (and its Photos) for a given Profile.'''
+
    form_class = CreatePostForm
    template_name = "create_post_form.html"
+
+   def get_context_data(self, **kwargs):
+      '''Add the Profile (identified by the URL's pk) to the template context.'''
+
+      context = super().get_context_data(**kwargs)
+      profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+      context['profile'] = profile
+      return context
+
+   def form_valid(self, form):
+      '''Attach the Profile to the new Post, save it, then create a Photo
+      for each uploaded file.'''
+
+      profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+      form.instance.profile = profile
+      response = super().form_valid(form)
+
+      files = self.request.FILES.getlist('files')
+      for file in files:
+         Photo.objects.create(post=self.object, image_file=file)
+
+      return response
 
 
 class PostDetailView(DetailView):
