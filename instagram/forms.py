@@ -1,7 +1,7 @@
 from django import forms
-from .models import Profile
+from .models import Profile, Posts, Photo
 
 class CreatePostForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        fields = ['username', 'display_name', 'profile_image_url', 'bio_text']
+        model = Posts
+        fields = ['caption']

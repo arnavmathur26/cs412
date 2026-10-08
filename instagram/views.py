@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Profile
+from .models import Profile, Posts
 from .forms import CreatePostForm
 
 # Create your views here.
@@ -30,4 +30,12 @@ class ProfileDetailView(DetailView):
 class CreatePostView(CreateView):
    form_class = CreatePostForm
    template_name = "create_post_form.html"
+
+
+class PostDetailView(DetailView):
+   '''Show a single Post'''
+
+   model = Posts
+   template_name = "show_post.html"
+   context_object_name = "post"
 

@@ -16,7 +16,13 @@
         <p><a href="{% url 'show_profile' profile.pk %}">{{ profile.display_name }}</a></p>
     </div>
     {% empty %}
-    <p>No profiles yet.</p>
+    <h3>Posts</h3>
+    {% for post in profile.get_posts %}
+        <p>{{ post.caption }}</p>
+        {% for photo in post.get_photos %}
+            <img src="{{ photo.image_url }}" alt="">
+        {% endfor %}
+    {% endfor %}
     {% endfor %}
 </div>
 {% endblock %}

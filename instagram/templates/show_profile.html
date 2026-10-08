@@ -13,7 +13,7 @@
 
         <table class="profile-stats">
             <tr>
-                <td><strong>&ndash;</strong> posts</td>
+                <td><strong>{{ profile.get_posts.count }}</strong> posts</td>
                 <td><strong>1,250</strong> followers</td>
                 <td><strong>348</strong> following</td>
             </tr>
@@ -38,6 +38,16 @@
 
 <section class="profile-posts">
     <h3>Posts</h3>
-    <p>Posts will appear here.</p>
+    {% for post in profile.get_posts %}
+        <div class="post">
+            <p>{{ post.caption }}</p>
+            {% for photo in post.get_photos %}
+                <img src="{% static photo.image_url %}" alt="" style="width: 450px; height: 450px; object-fit: cover;">
+            {% endfor %}
+            <p><a href="{% url 'show_post' post.pk %}">View post</a></p>
+        </div>
+    {% empty %}
+        <p>No posts yet.</p>
+    {% endfor %}
 </section>
 {% endblock %}
