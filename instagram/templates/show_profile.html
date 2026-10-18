@@ -10,12 +10,16 @@
 
     <div class="profile-info">
         <h2>@{{ profile.username }}</h2>
+        <p>
+            <a href="{% url 'update_profile' profile.pk %}">Update Profile</a> |
+            <a href="{% url 'show_feed' profile.pk %}">Feed</a>
+        </p>
 
         <table class="profile-stats">
             <tr>
                 <td><strong>{{ profile.get_posts.count }}</strong> posts</td>
-                <td><strong>1,250</strong> followers</td>
-                <td><strong>348</strong> following</td>
+                <td><a href="{% url 'show_followers' profile.pk %}"><strong>{{ profile.get_num_followers }}</strong> followers</a></td>
+                <td><a href="{% url 'show_following' profile.pk %}"><strong>{{ profile.get_num_following }}</strong> following</a></td>
             </tr>
         </table>
 

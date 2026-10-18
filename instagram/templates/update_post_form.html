@@ -1,0 +1,21 @@
+<!-- instagram/templates/update_post_form.html
+    Display the HTML form to update the caption of a Post. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Update Post</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </p>
+    {% endfor %}
+
+    <button type="submit">Update Post</button>
+    <a href="{% url 'show_post' post.pk %}"><button type="button">Cancel</button></a>
+</form>
+{% endblock %}

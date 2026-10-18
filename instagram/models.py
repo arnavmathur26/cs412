@@ -23,6 +23,33 @@ class Profile(models.Model):
         posts = Posts.objects.filter(profile=self)
         return posts
 
+    def get_followers(self):
+        '''Return a list of the Profiles that follow this Profile.'''
+        followers = []
+        for follow in Follow.objects.filter(profile=self):
+            followers.append(follow.follower_profile)
+        return followers
+
+    def get_num_followers(self):
+        '''Return how many Profiles follow this Profile.'''
+        return len(self.get_followers())
+
+    def get_following(self):
+        '''Return a list of the Profiles that this Profile follows.'''
+        following = []
+        for follow in Follow.objects.filter(follower_profile=self):
+            following.append(follow.profile)
+        return following
+
+    def get_num_following(self):
+        '''Return how many Profiles this Profile follows.'''
+        return len(self.get_following())
+
+    def get_post_feed(self):
+        '''Return the Posts by the Profiles this Profile follows, newest first.'''
+        posts = Posts.objects.filter(profile__in=self.get_following()).order_by('-timestamp')
+        return posts
+
 class Posts(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
@@ -38,6 +65,16 @@ class Posts(models.Model):
     def get_photos(self):
         photos = Photo.objects.filter(post=self)
         return photos
+
+    def get_all_comments(self):
+        '''Return all Comments on this Post.'''
+        comments = Comment.objects.filter(post=self)
+        return comments
+
+    def get_likes(self):
+        '''Return all Likes on this Post.'''
+        likes = Like.objects.filter(post=self)
+        return likes
 
 
 class Photo(models.Model):
@@ -56,3 +93,40 @@ class Photo(models.Model):
         if self.image_url:
             return f'{self.post.profile.username}: {self.image_url} - {self.post.caption}'
         return f'{self.post.profile.username}: {self.image_file.name} - {self.post.caption}'
+
+
+class Follow(models.Model):
+    '''A Profile (follower_profile) following another Profile (profile).'''
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile")
+    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        '''Return a string showing who follows whom.'''
+        return f'{self.follower_profile.display_name} follows {self.profile.display_name}'
+
+
+class Comment(models.Model):
+    '''A Comment made by a Profile on a Post.'''
+
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=False)
+
+    def __str__(self):
+        '''Return a string showing the Comment and who wrote it.'''
+        return f'{self.profile.username} on post {self.post.pk}: {self.text}'
+
+
+class Like(models.Model):
+    '''A Like from a Profile on a Post.'''
+
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        '''Return a string showing who liked which Post.'''
+        return f'{self.profile.username} likes post {self.post.pk}'

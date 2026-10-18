@@ -1,0 +1,35 @@
+<!-- instagram/templates/show_feed.html
+    Show the post feed for a Profile: the Posts by every Profile it follows. -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Feed for @{{ profile.username }}</h2>
+<p><a href="{% url 'show_profile' profile.pk %}">Back to profile</a></p>
+
+{% for post in profile.get_post_feed %}
+    <div class="post">
+        <p class="post-meta">
+            <a href="{% url 'show_profile' post.profile.pk %}">
+                <img src="{% static post.profile.profile_image_url %}" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+                <strong>{{ post.profile.display_name }}</strong>
+            </a>
+        </p>
+
+        {% if post.get_photos %}
+            <a href="{% url 'show_post' post.pk %}">
+                <img src="{{ post.get_photos.first.get_image_url }}" alt="" style="width: 450px; height: 450px; object-fit: cover;">
+            </a>
+        {% endif %}
+
+        <p><strong>{{ post.get_likes.count }} likes</strong></p>
+        <p>{{ post.caption }}</p>
+
+        {% for comment in post.get_all_comments %}
+            <p><strong>@{{ comment.profile.username }}</strong> {{ comment.text }}</p>
+        {% endfor %}
+    </div>
+{% empty %}
+    <p>No posts in your feed yet. Follow some profiles!</p>
+{% endfor %}
+{% endblock %}

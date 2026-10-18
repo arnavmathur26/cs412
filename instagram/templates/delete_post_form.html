@@ -1,0 +1,24 @@
+<!-- instagram/templates/delete_post_form.html
+    Ask the user to confirm deleting a Post, showing the Post first. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Delete this Post?</h1>
+
+<div class="post-detail">
+    <p class="post-meta"><strong>@{{ post.profile.username }}</strong></p>
+    <p class="post-caption">{{ post.caption }}</p>
+    {% for photo in post.get_photos %}
+        <img src="{{ photo.get_image_url }}" alt="" style="width: 200px; height: 200px; object-fit: cover;">
+    {% endfor %}
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm Delete</button>
+</form>
+
+<form method="get" action="{% url 'show_profile' profile.pk %}">
+    <button type="submit">Cancel</button>
+</form>
+{% endblock %}

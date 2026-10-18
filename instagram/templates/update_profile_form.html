@@ -1,0 +1,21 @@
+<!-- instagram/templates/update_profile_form.html
+    Display the HTML form to update an existing Profile. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Update Profile for @{{ profile.username }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </p>
+    {% endfor %}
+
+    <button type="submit">Update Profile</button>
+    <a href="{% url 'show_profile' profile.pk %}"><button type="button">Cancel</button></a>
+</form>
+{% endblock %}

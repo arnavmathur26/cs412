@@ -1,0 +1,38 @@
+<!-- instagram/templates/search_results.html
+    Arnav Mathur, ama26@bu.edu
+    Show the Profiles and Posts that match a search query. -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Search results for "{{ query }}"</h2>
+<p><a href="{% url 'search' profile.pk %}">New search</a></p>
+
+<h3>Profiles</h3>
+<div class="profile-grid">
+    {% for p in profiles %}
+    <div class="profile-card">
+        <a href="{% url 'show_profile' p.pk %}">
+            <img src="{% static p.profile_image_url %}" alt="{{ p.username }}'s profile picture">
+        </a>
+        <h3>@{{ p.username }}</h3>
+        <p><a href="{% url 'show_profile' p.pk %}">{{ p.display_name }}</a></p>
+    </div>
+    {% empty %}
+    <p>No matching profiles.</p>
+    {% endfor %}
+</div>
+
+<h3>Posts</h3>
+{% for post in posts %}
+    <div class="post">
+        <p><strong>@{{ post.profile.username }}</strong> {{ post.caption }}</p>
+        {% if post.get_photos %}
+            <img src="{{ post.get_photos.first.get_image_url }}" alt="" style="width: 200px; height: 200px; object-fit: cover;">
+        {% endif %}
+        <p><a href="{% url 'show_post' post.pk %}">View post</a></p>
+    </div>
+{% empty %}
+    <p>No matching posts.</p>
+{% endfor %}
+{% endblock %}
