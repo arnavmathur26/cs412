@@ -15,6 +15,20 @@
             <a href="{% url 'update_profile' %}">Update Profile</a> |
             <a href="{% url 'show_feed' %}">Feed</a>
         </p>
+        {% elif request.user.is_authenticated %}
+        <p>
+            {% if is_following %}
+            <form method="post" action="{% url 'delete_follow_profile' profile.pk %}" style="display:inline">
+                {% csrf_token %}
+                <button type="submit">Unfollow</button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'follow_profile' profile.pk %}" style="display:inline">
+                {% csrf_token %}
+                <button type="submit">Follow</button>
+            </form>
+            {% endif %}
+        </p>
         {% endif %}
 
         <table class="profile-stats">

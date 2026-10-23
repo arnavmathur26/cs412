@@ -24,8 +24,12 @@ urlpatterns = [
     path('profile/<int:pk>', views.ProfileDetailView.as_view(), name="show_my_profile"),
     path('profile/<int:pk>/followers', views.ShowFollowersDetailView.as_view(), name="show_followers"),
     path('profile/<int:pk>/following', views.ShowFollowingDetailView.as_view(), name="show_following"),
+    path('profile/<int:pk>/follow', views.FollowProfileView.as_view(), name="follow_profile"),
+    path('profile/<int:pk>/delete_follow', views.DeleteFollowProfileView.as_view(), name="delete_follow_profile"),
 
     path('post/<int:pk>', views.PostDetailView.as_view(), name="show_post"),
     path('post/<int:pk>/delete', views.DeletePostView.as_view(), name="delete_post"),
     path('post/<int:pk>/update', views.UpdatePostView.as_view(), name="update_post"),
+    path('post/<int:pk>/like', views.LikePostView.as_view(), name="like_post"),
+    path('post/<int:pk>/delete_like', views.DeleteLikePostView.as_view(), name="delete_like_post"),
 ]

@@ -9,6 +9,19 @@
         <span>{{ post.timestamp|date:"F j, Y, g:i a" }}</span>
     </p>
     <p><strong>{{ post.get_likes.count }} likes</strong></p>
+    {% if not is_owner and request.user.is_authenticated %}
+        {% if is_liked %}
+        <form method="post" action="{% url 'delete_like_post' post.pk %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit">Unlike</button>
+        </form>
+        {% else %}
+        <form method="post" action="{% url 'like_post' post.pk %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit">Like</button>
+        </form>
+        {% endif %}
+    {% endif %}
     <p class="post-caption">{{ post.caption }}</p>
 
     <h3>Comments</h3>

@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied
-from .models import Profile, Posts, Photo
+from .models import Profile, Posts, Photo, Follow, Like
 from .forms import CreatePostForm, CreateProfileForm, UpdateProfileForm, UpdatePostForm
 
 # Create your views here.
@@ -76,11 +76,19 @@ class ProfileDetailView(DetailView):
    context_object_name = "profile"
 
    def get_context_data(self, **kwargs):
-      '''Flag whether the logged-in User owns this Profile, for template decisions.'''
+      '''Flag whether the logged-in User owns this Profile, and whether they
+      already follow it, for template decisions.'''
 
       context = super().get_context_data(**kwargs)
-      context['is_owner'] = (self.request.user.is_authenticated and
-                              self.object.user == self.request.user)
+      is_owner = (self.request.user.is_authenticated and
+                  self.object.user == self.request.user)
+      context['is_owner'] = is_owner
+
+      if self.request.user.is_authenticated and not is_owner:
+         viewer_profile = Profile.objects.filter(user=self.request.user).first()
+         context['is_following'] = Follow.objects.filter(
+            profile=self.object, follower_profile=viewer_profile).exists()
+
       return context
 
 
@@ -136,11 +144,19 @@ class PostDetailView(DetailView):
    context_object_name = "post"
 
    def get_context_data(self, **kwargs):
-      '''Flag whether the logged-in User owns this Post, for template decisions.'''
+      '''Flag whether the logged-in User owns this Post, and whether they
+      already liked it, for template decisions.'''
 
       context = super().get_context_data(**kwargs)
-      context['is_owner'] = (self.request.user.is_authenticated and
-                              self.object.profile.user == self.request.user)
+      is_owner = (self.request.user.is_authenticated and
+                  self.object.profile.user == self.request.user)
+      context['is_owner'] = is_owner
+
+      if self.request.user.is_authenticated and not is_owner:
+         viewer_profile = Profile.objects.filter(user=self.request.user).first()
+         context['is_liked'] = Like.objects.filter(
+            post=self.object, profile=viewer_profile).exists()
+
       return context
 
 
@@ -260,3 +276,57 @@ class LogoutConfirmationView(TemplateView):
    '''Show a styled confirmation page after the User logs out.'''
 
    template_name = "logout.html"
+
+
+class FollowProfileView(ProfileRequiredMixin, TemplateView):
+   '''Create a Follow: the logged-in User's Profile follows another Profile.'''
+
+   def dispatch(self, request, *args, **kwargs):
+      if not request.user.is_authenticated:
+         return self.handle_no_permission()
+
+      profile = self.get_profile()
+      other_profile = get_object_or_404(Profile, pk=kwargs['pk'])
+      if profile != other_profile:
+         Follow.objects.get_or_create(profile=other_profile, follower_profile=profile)
+      return redirect('show_my_profile', pk=other_profile.pk)
+
+
+class DeleteFollowProfileView(ProfileRequiredMixin, TemplateView):
+   '''Delete a Follow: the logged-in User's Profile unfollows another Profile.'''
+
+   def dispatch(self, request, *args, **kwargs):
+      if not request.user.is_authenticated:
+         return self.handle_no_permission()
+
+      profile = self.get_profile()
+      other_profile = get_object_or_404(Profile, pk=kwargs['pk'])
+      Follow.objects.filter(profile=other_profile, follower_profile=profile).delete()
+      return redirect('show_my_profile', pk=other_profile.pk)
+
+
+class LikePostView(ProfileRequiredMixin, TemplateView):
+   '''Create a Like: the logged-in User's Profile likes a Post.'''
+
+   def dispatch(self, request, *args, **kwargs):
+      if not request.user.is_authenticated:
+         return self.handle_no_permission()
+
+      profile = self.get_profile()
+      post = get_object_or_404(Posts, pk=kwargs['pk'])
+      if post.profile != profile:
+         Like.objects.get_or_create(post=post, profile=profile)
+      return redirect('show_post', pk=post.pk)
+
+
+class DeleteLikePostView(ProfileRequiredMixin, TemplateView):
+   '''Delete a Like: the logged-in User's Profile un-likes a Post.'''
+
+   def dispatch(self, request, *args, **kwargs):
+      if not request.user.is_authenticated:
+         return self.handle_no_permission()
+
+      profile = self.get_profile()
+      post = get_object_or_404(Posts, pk=kwargs['pk'])
+      Like.objects.filter(post=post, profile=profile).delete()
+      return redirect('show_post', pk=post.pk)
