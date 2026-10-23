@@ -1,0 +1,29 @@
+<!-- instagram/templates/create_profile_form.html
+    Display the HTML form to register a new User and create their Profile together. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create a Profile</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in user_creation_form %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        </p>
+    {% endfor %}
+
+    {% for field in form %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        </p>
+    {% endfor %}
+
+    <button type="submit">Create Profile</button>
+</form>
+{% endblock %}

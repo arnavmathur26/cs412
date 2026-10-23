@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied
 from .models import Profile, Posts, Photo
-from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from .forms import CreatePostForm, CreateProfileForm, UpdateProfileForm, UpdatePostForm
 
 # Create your views here.
 
@@ -27,6 +29,35 @@ class ProfileRequiredMixin(LoginRequiredMixin):
       '''Return the Profile associated with the logged-in User.'''
 
       return Profile.objects.filter(user=self.request.user).first()
+
+
+class CreateProfileView(CreateView):
+   '''Show a combined User-registration + Profile-creation form, and create both.'''
+
+   form_class = CreateProfileForm
+   template_name = "create_profile_form.html"
+
+   def get_context_data(self, **kwargs):
+      '''Add an (unbound) UserCreationForm to the template context.'''
+
+      context = super().get_context_data(**kwargs)
+      context['user_creation_form'] = UserCreationForm()
+      return context
+
+   def form_valid(self, form):
+      '''Create the User from the posted UserCreationForm data, log them in,
+      then attach the new User to the Profile and delegate to the superclass.'''
+
+      user_creation_form = UserCreationForm(self.request.POST)
+      if not user_creation_form.is_valid():
+         context = self.get_context_data()
+         context['user_creation_form'] = user_creation_form
+         return self.render_to_response(context)
+
+      user = user_creation_form.save()
+      login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+      form.instance.user = user
+      return super().form_valid(form)
 
 
 class ProfileListView(ListView):
