@@ -56,7 +56,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cs412.urls'
 
-LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'show_all_profiles'
 
 TEMPLATES = [

@@ -2,7 +2,7 @@
 # It maps the root path (r'') to ProfileListView to show all profiles,
 # and 'profile/<int:pk>' to ProfileDetailView to show a single profile
 
-from django.urls import path
+from django.urls import path, reverse_lazy
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -11,7 +11,8 @@ urlpatterns = [
     path(r'', views.ProfileListView.as_view(), name="show_all_profiles"),
 
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'), ## NEW
-	path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'), ## NEW
+	path('logout/', auth_views.LogoutView.as_view(next_page=reverse_lazy('logout_confirmation')), name='logout'), ## NEW
+	path('logout_confirmation/', views.LogoutConfirmationView.as_view(), name='logout_confirmation'), ## NEW
 
     path('profile', views.ShowMyProfileView.as_view(), name="profile"),
     path('profile/create_post', views.CreatePostView.as_view(), name="create_post"),

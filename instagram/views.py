@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from .models import Profile, Posts, Photo
@@ -17,6 +17,11 @@ def main(request):
 
 class ProfileRequiredMixin(LoginRequiredMixin):
    '''LoginRequiredMixin plus a helper to find the Profile for the logged-in User.'''
+
+   def get_login_url(self):
+      '''Point LoginRequiredMixin at this app's own login view.'''
+
+      return reverse('login')
 
    def get_profile(self):
       '''Return the Profile associated with the logged-in User.'''
@@ -218,3 +223,9 @@ class SearchView(ProfileRequiredMixin, ListView):
       context['posts'] = self.get_queryset()
       context['profiles'] = profiles.distinct()
       return context
+
+
+class LogoutConfirmationView(TemplateView):
+   '''Show a styled confirmation page after the User logs out.'''
+
+   template_name = "logout.html"
