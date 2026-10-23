@@ -5,12 +5,12 @@
 
 {% block content %}
 <h2>Feed for @{{ profile.username }}</h2>
-<p><a href="{% url 'show_profile' profile.pk %}">Back to profile</a></p>
+<p><a href="{% url 'show_my_profile' profile.pk %}">Back to profile</a></p>
 
 {% for post in profile.get_post_feed %}
     <div class="post">
         <p class="post-meta">
-            <a href="{% url 'show_profile' post.profile.pk %}">
+            <a href="{% url 'show_my_profile' post.profile.pk %}">
                 <img src="{% static post.profile.profile_image_url %}" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                 <strong>{{ post.profile.display_name }}</strong>
             </a>

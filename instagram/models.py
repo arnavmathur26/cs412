@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.templatetags.static import static
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -14,7 +14,8 @@ class Profile(models.Model):
     profile_image_url = models.TextField(blank=False)
     bio_text = models.TextField(blank=False, default='')
     join_date = models.DateTimeField(auto_now=True)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def get_absolute_url(self):
         '''Return the URL to display this Profile.'''
         return reverse('show_profile', kwargs={'pk': self.pk})

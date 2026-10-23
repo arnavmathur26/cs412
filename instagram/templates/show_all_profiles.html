@@ -9,11 +9,11 @@
 <div class="profile-grid">
     {% for profile in profiles %}
     <div class="profile-card">
-        <a href="{% url 'show_profile' profile.pk %}">
+        <a href="{% url 'show_my_profile' profile.pk %}">
             <img src="{% static profile.profile_image_url %}" alt="{{ profile.username }}'s profile picture">
         </a>
         <h3>@{{ profile.username }}</h3>
-        <p><a href="{% url 'show_profile' profile.pk %}">{{ profile.display_name }}</a></p>
+        <p><a href="{% url 'show_my_profile' profile.pk %}">{{ profile.display_name }}</a></p>
     </div>
     {% empty %}
     <h3>Posts</h3>

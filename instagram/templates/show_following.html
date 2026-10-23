@@ -4,16 +4,16 @@
 {% load static %}
 
 {% block content %}
-<h2>Profiles followed by <a href="{% url 'show_profile' profile.pk %}">@{{ profile.username }}</a></h2>
+<h2>Profiles followed by <a href="{% url 'show_my_profile' profile.pk %}">@{{ profile.username }}</a></h2>
 
 <div class="profile-grid">
     {% for p in profile.get_following %}
     <div class="profile-card">
-        <a href="{% url 'show_profile' p.pk %}">
+        <a href="{% url 'show_my_profile' p.pk %}">
             <img src="{% static p.profile_image_url %}" alt="{{ p.username }}'s profile picture">
         </a>
         <h3>@{{ p.username }}</h3>
-        <p><a href="{% url 'show_profile' p.pk %}">{{ p.display_name }}</a></p>
+        <p><a href="{% url 'show_my_profile' p.pk %}">{{ p.display_name }}</a></p>
     </div>
     {% empty %}
     <p>Not following anyone yet.</p>
