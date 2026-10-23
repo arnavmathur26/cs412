@@ -18,7 +18,7 @@ class Profile(models.Model):
     
     def get_absolute_url(self):
         '''Return the URL to display this Profile.'''
-        return reverse('show_profile', kwargs={'pk': self.pk})
+        return reverse('show_my_profile', kwargs={'pk': self.pk})
 
     def get_posts(self):
         posts = Posts.objects.filter(profile=self)

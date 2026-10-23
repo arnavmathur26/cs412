@@ -17,10 +17,12 @@
     {% empty %}
         <p>No comments yet.</p>
     {% endfor %}
+    {% if is_owner %}
     <p>
         <a href="{% url 'update_post' post.pk %}">Update</a> |
         <a href="{% url 'delete_post' post.pk %}">Delete</a>
     </p>
+    {% endif %}
 
     <div class="post-photo-grid">
         {% for photo in post.get_photos %}

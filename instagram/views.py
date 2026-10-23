@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from .models import Profile, Posts, Photo
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 
@@ -11,6 +13,15 @@ def main(request):
 
    template_name = "main.html"
    return render(request, template_name)
+
+
+class ProfileRequiredMixin(LoginRequiredMixin):
+   '''LoginRequiredMixin plus a helper to find the Profile for the logged-in User.'''
+
+   def get_profile(self):
+      '''Return the Profile associated with the logged-in User.'''
+
+      return Profile.objects.filter(user=self.request.user).first()
 
 
 class ProfileListView(ListView):
@@ -28,25 +39,49 @@ class ProfileDetailView(DetailView):
    template_name = "show_profile.html"
    context_object_name = "profile"
 
-class CreatePostView(CreateView):
-   '''Handle creating a new Post (and its Photos) for a given Profile.'''
+   def get_context_data(self, **kwargs):
+      '''Flag whether the logged-in User owns this Profile, for template decisions.'''
+
+      context = super().get_context_data(**kwargs)
+      context['is_owner'] = (self.request.user.is_authenticated and
+                              self.object.user == self.request.user)
+      return context
+
+
+class ShowMyProfileView(ProfileRequiredMixin, DetailView):
+   '''Show the logged-in User's own Profile page.'''
+
+   model = Profile
+   template_name = "show_profile.html"
+   context_object_name = "profile"
+
+   def get_object(self, queryset=None):
+      return self.get_profile()
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context['is_owner'] = True
+      return context
+
+
+class CreatePostView(ProfileRequiredMixin, CreateView):
+   '''Handle creating a new Post (and its Photos) for the logged-in User's Profile.'''
 
    form_class = CreatePostForm
    template_name = "create_post_form.html"
 
    def get_context_data(self, **kwargs):
-      '''Add the Profile (identified by the URL's pk) to the template context.'''
+      '''Add the logged-in User's Profile to the template context.'''
 
       context = super().get_context_data(**kwargs)
-      profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
-      context['profile'] = profile
+      context['profile'] = self.get_profile()
       return context
 
    def form_valid(self, form):
       '''Attach the Profile to the new Post, save it, then create a Photo
       for each uploaded file.'''
 
-      profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+      profile = self.get_profile()
       form.instance.profile = profile
       response = super().form_valid(form)
 
@@ -64,21 +99,36 @@ class PostDetailView(DetailView):
    template_name = "show_post.html"
    context_object_name = "post"
 
+   def get_context_data(self, **kwargs):
+      '''Flag whether the logged-in User owns this Post, for template decisions.'''
+
+      context = super().get_context_data(**kwargs)
+      context['is_owner'] = (self.request.user.is_authenticated and
+                              self.object.profile.user == self.request.user)
+      return context
 
 
-class UpdateProfileView(UpdateView):
-   '''Handle updating an existing Profile.'''
+class UpdateProfileView(ProfileRequiredMixin, UpdateView):
+   '''Handle updating the logged-in User's own Profile.'''
 
-   model = Profile
    form_class = UpdateProfileForm
    template_name = "update_profile_form.html"
 
+   def get_object(self, queryset=None):
+      return self.get_profile()
 
-class DeletePostView(DeleteView):
-   '''Handle deleting a Post.'''
+
+class DeletePostView(ProfileRequiredMixin, DeleteView):
+   '''Handle deleting a Post, if it belongs to the logged-in User.'''
 
    model = Posts
    template_name = "delete_post_form.html"
+
+   def get_object(self, queryset=None):
+      post = super().get_object(queryset)
+      if post.profile.user != self.request.user:
+         raise PermissionDenied("You can't delete another user's post.")
+      return post
 
    def get_context_data(self, **kwargs):
       '''Add the Post being deleted and its author's Profile to the context.'''
@@ -91,16 +141,22 @@ class DeletePostView(DeleteView):
    def get_success_url(self):
       '''After deleting, go back to the author's Profile page.'''
 
-      return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
+      return reverse('show_my_profile', kwargs={'pk': self.object.profile.pk})
 
 
-class UpdatePostView(UpdateView):
-   '''Handle updating the caption of a Post.'''
+class UpdatePostView(ProfileRequiredMixin, UpdateView):
+   '''Handle updating the caption of a Post, if it belongs to the logged-in User.'''
 
    model = Posts
    form_class = UpdatePostForm
    template_name = "update_post_form.html"
    context_object_name = "post"
+
+   def get_object(self, queryset=None):
+      post = super().get_object(queryset)
+      if post.profile.user != self.request.user:
+         raise PermissionDenied("You can't update another user's post.")
+      return post
 
 
 class ShowFollowersDetailView(DetailView):
@@ -119,26 +175,28 @@ class ShowFollowingDetailView(DetailView):
    context_object_name = "profile"
 
 
-class ShowFeedView(DetailView):
-   '''Show the post feed for a Profile.'''
+class ShowFeedView(ProfileRequiredMixin, DetailView):
+   '''Show the post feed for the logged-in User's own Profile.'''
 
    model = Profile
    template_name = "show_feed.html"
    context_object_name = "profile"
 
+   def get_object(self, queryset=None):
+      return self.get_profile()
 
-class SearchView(ListView):
+
+class SearchView(ProfileRequiredMixin, ListView):
    '''Search for Profiles and Posts that match a query.'''
 
    template_name = "search_results.html"
 
-   def dispatch(self, request, *args, **kwargs):
+   def get(self, request, *args, **kwargs):
       '''Show the search form if there is no query, otherwise show the results.'''
 
-      if 'query' not in self.request.GET:
-         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
-         return render(request, "search.html", {'profile': profile})
-      return super().dispatch(request, *args, **kwargs)
+      if 'query' not in request.GET:
+         return render(request, "search.html", {'profile': self.get_profile()})
+      return super().get(request, *args, **kwargs)
 
    def get_queryset(self):
       '''Return the Posts whose caption contains the query.'''
@@ -155,7 +213,7 @@ class SearchView(ListView):
                   Profile.objects.filter(display_name__icontains=query) |
                   Profile.objects.filter(bio_text__icontains=query))
 
-      context['profile'] = get_object_or_404(Profile, pk=self.kwargs['pk'])
+      context['profile'] = self.get_profile()
       context['query'] = query
       context['posts'] = self.get_queryset()
       context['profiles'] = profiles.distinct()
