@@ -1,0 +1,54 @@
+{% comment %}
+Shared Voter filter form, used by both the voter listing and graphs pages.
+Pass form_action_name='voters' or 'graphs' when including this partial.
+{% endcomment %}
+<form class="filters" method="get" action="{% url form_action_name %}">
+    <label>Party affiliation
+        <select name="party_affiliation">
+            <option value="">-- Any --</option>
+            {% for party in party_affiliations %}
+            <option value="{{ party }}" {% if selected.party_affiliation == party %}selected{% endif %}>{{ party }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>Min date of birth (year)
+        <select name="min_dob">
+            <option value="">-- Any --</option>
+            {% for year in years %}
+            <option value="{{ year }}" {% if selected.min_dob == year|stringformat:'s' %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>Max date of birth (year)
+        <select name="max_dob">
+            <option value="">-- Any --</option>
+            {% for year in years %}
+            <option value="{{ year }}" {% if selected.max_dob == year|stringformat:'s' %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>Voter score
+        <select name="voter_score">
+            <option value="">-- Any --</option>
+            {% for score in voter_scores %}
+            <option value="{{ score }}" {% if selected.voter_score == score|stringformat:'s' %}selected{% endif %}>{{ score }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <br>
+
+    {% for field, checked in election_fields %}
+    <label>
+        <input type="checkbox" name="{{ field }}" value="on" {% if checked %}checked{% endif %}>
+        {{ field }}
+    </label>
+    {% endfor %}
+
+    <br>
+    <button type="submit">Filter</button>
+    <a href="{% url form_action_name %}">Clear</a>
+</form>

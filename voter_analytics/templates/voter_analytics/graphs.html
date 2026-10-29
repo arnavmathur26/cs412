@@ -1,0 +1,21 @@
+{% extends 'voter_analytics/base.html' %}
+{% comment %}
+Graphs page. Shows the shared filter form and Plotly graphs (passed in
+as pre-rendered HTML) summarizing the voters matching the current filters.
+{% endcomment %}
+{% block content %}
+
+{% include 'voter_analytics/_filter_form.html' with form_action_name='graphs' %}
+
+<p>{{ voters.count }} voter{{ voters.count|pluralize }} shown in the graphs below.</p>
+
+<h2>Voters by Year of Birth</h2>
+{{ birth_year_graph|safe }}
+
+<h2>Voters by Party Affiliation</h2>
+{{ party_graph|safe }}
+
+<h2>Voter Participation by Election</h2>
+{{ election_graph|safe }}
+
+{% endblock %}
