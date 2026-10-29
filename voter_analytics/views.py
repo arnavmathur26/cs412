@@ -107,10 +107,7 @@ class GraphListView(VoterFilterMixin, ListView):
         voters = self.get_queryset()
 
         year_counts = (
-            voters.exclude(date_of_birth=None)
-            .values('date_of_birth__year')
-            .annotate(count=Count('id'))
-            .order_by('date_of_birth__year')
+            voters.exclude(date_of_birth=None).values('date_of_birth__year').annotate(count=Count('id')).order_by('date_of_birth__year')
         )
         fig_birth_year = go.Figure(data=[go.Bar(
             x=[c['date_of_birth__year'] for c in year_counts],
@@ -125,10 +122,7 @@ class GraphListView(VoterFilterMixin, ListView):
         total_voters = voters.count()
         min_party_count = total_voters * 0.0001
         party_counts = (
-            voters.values('party_affiliation')
-            .annotate(count=Count('id'))
-            .filter(count__gte=min_party_count)
-            .order_by('-count')
+            voters.values('party_affiliation').annotate(count=Count('id')).filter(count__gte=min_party_count).order_by('-count')
         )
         fig_party = go.Figure(data=[go.Pie(
             labels=[p['party_affiliation'] for p in party_counts],
