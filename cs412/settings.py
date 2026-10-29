@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'quote', #Assignment 1
     'restaurant', #Assignment 2
     'instagram', #Assignment 3 + 4
+    'voter_analytics', #Assignment 7    
 ]
 
 MIDDLEWARE = [
