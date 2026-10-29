@@ -22,8 +22,9 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("quote/", include("quote.urls")),
-    path("", include("instagram.urls")),
+    path("", include("voter_analytics.urls")),
     path("mini_insta/", include("instagram.urls")),
+    path("voter_analytics/", include("voter_analytics.urls")),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,25 @@
+<!-- voter_analytics/templates/voter_analytics/base.html
+ base.html sets up the standard HTML structure, renders the header/navigation shown on every page, 
+ and defines a content block for child templates to fill in. -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Newton Voters</title>
+        <link rel="stylesheet" href="{% static 'voter_analytics.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>Newton Voters</h1>
+            <nav>
+                <a href="{% url 'voters' %}">Voter Listing</a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>

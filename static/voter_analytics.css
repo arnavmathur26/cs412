@@ -1,0 +1,124 @@
+/* static/voter_analytics.css
+   Styling for the voter_analytics app: voter listing, filter form, and detail page. */
+
+body {
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    margin: 0;
+    background: #f7f7f9;
+    color: #222;
+}
+
+header {
+    background: #1b3a5c;
+    color: #fff;
+    padding: 1em 2em;
+}
+
+header h1 {
+    margin: 0 0 0.3em 0;
+}
+
+nav a {
+    color: #cfe3f7;
+    margin-right: 1.5em;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    max-width: 1100px;
+    margin: 2em auto;
+    padding: 0 2em;
+}
+
+h2 {
+    color: #1b3a5c;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 0.5em 1em;
+    text-align: left;
+}
+
+th {
+    background: #e8eef4;
+    color: #1b3a5c;
+}
+
+tr:nth-child(even) td {
+    background: #fafbfc;
+}
+
+table a {
+    color: #1b3a5c;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+table a:hover {
+    text-decoration: underline;
+}
+
+form.filters {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1.2em 1.5em;
+    margin-bottom: 1.5em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+form.filters label {
+    display: inline-block;
+    margin-right: 1.5em;
+    margin-bottom: 0.6em;
+}
+
+form.filters select {
+    margin-left: 0.4em;
+}
+
+form.filters button {
+    background: #1b3a5c;
+    color: #fff;
+    border: none;
+    padding: 0.5em 1.2em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form.filters button:hover {
+    background: #2a537f;
+}
+
+form.filters a {
+    margin-left: 1em;
+    color: #1b3a5c;
+}
+
+.pagination {
+    margin-top: 1.2em;
+}
+
+.pagination a {
+    color: #1b3a5c;
+    font-weight: 600;
+    margin: 0 0.5em;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
