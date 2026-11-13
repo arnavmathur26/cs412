@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Dad Jokes</title>
+</head>
+<body>
+
+    <h1>Dad Jokes</h1>
+
+    <nav>
+        <a href="{% url 'random' %}">Random</a> |
+        <a href="{% url 'show_all_jokes' %}">All Jokes</a> |
+        <a href="{% url 'show_all_pictures' %}">All Pictures</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

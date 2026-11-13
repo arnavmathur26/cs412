@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("voter_analytics.urls")),
     path("mini_insta/", include("instagram.urls")),
     path("voter_analytics/", include("voter_analytics.urls")),
+    path("dadjokes/", include("dadjokes.urls")),
 ]
 
 if settings.DEBUG:

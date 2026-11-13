@@ -1,0 +1,18 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+
+    {% if joke %}
+        <p>"{{ joke.joke }}" &mdash; {{ joke.contributor }}</p>
+    {% else %}
+        <p>No jokes yet.</p>
+    {% endif %}
+
+    {% if picture %}
+        <img src="{{ picture.image_url }}" alt="Dad joke picture" width="400">
+        <p>Contributed by {{ picture.contributor }}</p>
+    {% else %}
+        <p>No pictures yet.</p>
+    {% endif %}
+
+{% endblock %}

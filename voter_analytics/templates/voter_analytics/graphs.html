@@ -1,8 +1,6 @@
 {% extends 'voter_analytics/base.html' %}
-{% comment %}
-Graphs page. Shows the shared filter form and Plotly graphs (passed in
-as pre-rendered HTML) summarizing the voters matching the current filters.
-{% endcomment %}
+<!--Shows the shared filter form and Plotly graphs (passed in
+as pre-rendered HTML) summarizing the voters matching the current filters.-->
 {% block content %}
 
 {% include 'voter_analytics/_filter_form.html' with form_action_name='graphs' %}
