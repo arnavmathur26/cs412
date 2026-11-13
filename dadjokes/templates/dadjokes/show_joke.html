@@ -2,7 +2,9 @@
 
 {% block content %}
 
-    <p>"{{ joke.joke }}"</p>
-    <p>Contributed by {{ joke.contributor }}</p>
+    <div class="card">
+        <p class="joke-text">"{{ joke.joke }}"</p>
+        <p class="contributor">Contributed by {{ joke.contributor }}</p>
+    </div>
 
 {% endblock %}

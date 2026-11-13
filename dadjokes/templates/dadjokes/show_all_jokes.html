@@ -3,7 +3,7 @@
 {% block content %}
 
     <h2>All Jokes</h2>
-    <ul>
+    <ul class="joke-list">
     {% for joke in jokes %}
         <li><a href="{% url 'show_joke' joke.pk %}">"{{ joke.joke }}"</a> &mdash; {{ joke.contributor }}</li>
     {% endfor %}

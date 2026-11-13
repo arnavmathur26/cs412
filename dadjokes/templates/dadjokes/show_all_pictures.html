@@ -1,15 +1,16 @@
 {% extends 'dadjokes/base.html' %}
+{% load static %}
 
 {% block content %}
 
     <h2>All Pictures</h2>
+    <div class="picture-grid">
     {% for picture in pictures %}
-        <div>
-            <a href="{% url 'show_picture' picture.pk %}">
-                <img src="{{ picture.image_url }}" alt="Dad joke picture" width="300">
-            </a>
-            <p>Contributed by {{ picture.contributor }}</p>
-        </div>
+        <a href="{% url 'show_picture' picture.pk %}" class="card">
+            <img src="{% static picture.image_url %}" alt="Dad joke picture">
+            <p class="contributor">{{ picture.contributor }}</p>
+        </a>
     {% endfor %}
+    </div>
 
 {% endblock %}

@@ -1,18 +1,24 @@
 {% extends 'dadjokes/base.html' %}
+{% load static %}
 
 {% block content %}
 
+    <div class="card">
     {% if joke %}
-        <p>"{{ joke.joke }}" &mdash; {{ joke.contributor }}</p>
+        <p class="joke-text">"{{ joke.joke }}"</p>
+        <p class="contributor">&mdash; {{ joke.contributor }}</p>
     {% else %}
-        <p>No jokes yet.</p>
+        <p class="empty">No jokes yet.</p>
     {% endif %}
+    </div>
 
+    <div class="card">
     {% if picture %}
-        <img src="{{ picture.image_url }}" alt="Dad joke picture" width="400">
-        <p>Contributed by {{ picture.contributor }}</p>
+        <img src="{% static picture.image_url %}" alt="Dad joke picture">
+        <p class="contributor">Contributed by {{ picture.contributor }}</p>
     {% else %}
-        <p>No pictures yet.</p>
+        <p class="empty">No pictures yet.</p>
     {% endif %}
+    </div>
 
 {% endblock %}

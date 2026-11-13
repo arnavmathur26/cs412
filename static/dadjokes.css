@@ -1,0 +1,110 @@
+/* static/dadjokes.css
+   Styles for the Dad Jokes app. */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background-color: #fdfdfa;
+    color: #2b2b2b;
+}
+
+header {
+    background-color: #c62828;
+    padding: 16px 24px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #ffffff;
+}
+
+nav {
+    margin-top: 8px;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+.card {
+    display: block;
+    background-color: #ffffff;
+    border: 1px solid #2e7d32;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.joke-text {
+    font-size: 1.3em;
+    margin: 0 0 8px;
+}
+
+.contributor {
+    color: #2e7d32;
+    margin: 0;
+    font-weight: 600;
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.empty {
+    color: #c62828;
+    font-style: italic;
+}
+
+.joke-list {
+    list-style: none;
+    padding: 0;
+}
+
+.joke-list li {
+    background-color: #ffffff;
+    border: 1px solid #2e7d32;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+}
+
+.joke-list a {
+    color: #c62828;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.joke-list a:hover {
+    text-decoration: underline;
+}
+
+.picture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.picture-grid .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
