@@ -71,12 +71,19 @@ class Posts(models.Model):
         '''Return all Comments on this Post.'''
         comments = Comment.objects.filter(post=self)
         return comments
+    
+    def get_num_comments(self):
+        '''Return number of comments'''
+        return len(self.get_all_comments())
 
     def get_likes(self):
         '''Return all Likes on this Post.'''
         likes = Like.objects.filter(post=self)
         return likes
 
+    def get_num_likes(self):
+        '''Return number of likes'''
+        return len(self.get_likes())
 
 class Photo(models.Model):
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)

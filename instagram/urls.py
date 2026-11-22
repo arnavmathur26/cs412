@@ -4,6 +4,7 @@
 
 from django.urls import path, reverse_lazy
 from . import views
+from . import api_views
 from django.contrib.auth import views as auth_views
 
 
@@ -32,4 +33,10 @@ urlpatterns = [
     path('post/<int:pk>/update', views.UpdatePostView.as_view(), name="update_post"),
     path('post/<int:pk>/like', views.LikePostView.as_view(), name="like_post"),
     path('post/<int:pk>/delete_like', views.DeleteLikePostView.as_view(), name="delete_like_post"),
+
+    # REST API
+    path('api/profiles', api_views.ProfileList.as_view(), name="api_profiles"),
+    path('api/profiles/<int:pk>', api_views.ProfileDetail.as_view(), name="api_profile"),
+    path('api/profiles/<int:pk>/posts', api_views.PostsByProfile.as_view(), name="api_profile_posts"),
+    path('api/profiles/<int:pk>/feed', api_views.ProfileFeed.as_view(), name="api_profile_feed"),
 ]
