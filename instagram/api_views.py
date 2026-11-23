@@ -1,8 +1,9 @@
 from .serializers import PostsSerializer, ProfileSerializer
-from .models import Posts, Profile
+from .models import Photo, Posts, Profile
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,14 +17,17 @@ class ProfileDetail(generics.RetrieveAPIView):
 
 class PostsByProfile(generics.ListCreateAPIView):
     serializer_class = PostsSerializer
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_queryset(self):
         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
         return profile.get_posts()
-    
-    def create_post(self, serializer):
+
+    def perform_create(self, serializer):
         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
-        serializer.save(profile=profile)
+        post = serializer.save(profile=profile)
+        for file in self.request.FILES.getlist('files'):
+            Photo.objects.create(post=post, image_file=file)
 
 class ProfileFeed(generics.ListAPIView):
     serializer_class = PostsSerializer
