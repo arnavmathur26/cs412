@@ -35,6 +35,7 @@ urlpatterns = [
     path('post/<int:pk>/delete_like', views.DeleteLikePostView.as_view(), name="delete_like_post"),
 
     # REST API
+    path('api/login', api_views.LoginView.as_view(), name="api_login"),
     path('api/profiles', api_views.ProfileList.as_view(), name="api_profiles"),
     path('api/profiles/<int:pk>', api_views.ProfileDetail.as_view(), name="api_profile"),
     path('api/profiles/<int:pk>/posts', api_views.PostsByProfile.as_view(), name="api_profile_posts"),

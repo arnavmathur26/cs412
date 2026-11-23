@@ -44,8 +44,19 @@ INSTALLED_APPS = [
     'instagram', #Assignment 3 + 4
     'voter_analytics', #Assignment 7
     'rest_framework', #REST API
-    'dadjokes', #Assignment 9    
+    'rest_framework.authtoken', #REST API token auth
+    'dadjokes', #Assignment 9
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
